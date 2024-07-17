@@ -1,0 +1,40 @@
+# Tomcat
+server:
+  port: 8081
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: account-service
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///seata-account?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: admin
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#seata客户端配置
+seata:
+  enabled: true
+  application-id: seata_tx
+  tx-service-group: seata_tx_group
+  service:
+    vgroup-mapping:
+      seata_tx_group: default
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      namespace:
+      group: SEATA_GROUP
+  data-source-proxy-mode: AT
